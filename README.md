@@ -23,20 +23,25 @@ Apenas certifique-se de ter o Docker e o Docker Compose instalados.
 ```bash
 # Sobe o container, executa a esteira e mapeia os dados para a sua máquina
 docker compose up --build
+```
+*O arquivo `arquivo_final.parquet` será gerado automaticamente na pasta `./data/bronze/` do seu diretório atual.*
 
-O arquivo arquivo_final.parquet será gerado automaticamente na pasta ./data/bronze/ do seu diretório atual.
+### Opção 2: Ambiente Local (com uv)
 
-Opção 2: Ambiente Local (com uv)
-  Clone o repositório.
+1. Clone o repositório.
+2. Sincronize as dependências usando o `uv`:
+```bash
+uv sync --no-dev
+```
+3. Execute o módulo principal a partir da raiz do projeto:
+```bash
+uv run python -m src.main
+```
 
-  Sincronize as dependências usando o uv:
-    uv sync --no-dev
+## 📂 Estrutura do Projeto
 
-  Execute o módulo principal a partir da raiz do projeto:
-    uv run python -m src.main
-
-📂 Estrutura do Projeto
-  ├── src/
+```text
+├── src/
 │   ├── extract.py      # Lógica de conexão, concorrência e retries da API
 │   ├── transform.py    # Processamento em lote usando Polars
 │   ├── models.py       # Contratos de dados com Pydantic
@@ -47,10 +52,9 @@ Opção 2: Ambiente Local (com uv)
 ├── Dockerfile
 ├── pyproject.toml      # Configuração de dependências (formato uv)
 └── README.md
+```
 
-📌 Próximos Passos (Roadmap)
-[ ] Implementar testes unitários automatizados com pytest.
-
-[ ] Adicionar pipeline de CI/CD via GitHub Actions para validação de PRs.
-
-[ ] Migrar o armazenamento do destino local para um bucket S3 na nuvem.
+## 📌 Próximos Passos (Roadmap)
+- [ ] Implementar testes unitários automatizados com `pytest`.
+- [ ] Adicionar pipeline de CI/CD via GitHub Actions para validação de PRs.
+- [ ] Migrar o armazenamento do destino local para um bucket S3 na nuvem.
