@@ -1,0 +1,6 @@
+services:
+  crypto_polars:
+    build: .
+    container_name: etl_crypto
+    volumes: 
+      - ./data:/app/data
