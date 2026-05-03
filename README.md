@@ -53,8 +53,3 @@ uv run python -m src.main
 ├── pyproject.toml      # Configuração de dependências (formato uv)
 └── README.md
 ```
-
-## 📌 Próximos Passos (Roadmap)
-- [ ] Implementar testes unitários automatizados com `pytest`.
-- [ ] Adicionar pipeline de CI/CD via GitHub Actions para validação de PRs.
-- [ ] Migrar o armazenamento do destino local para um bucket S3 na nuvem.
