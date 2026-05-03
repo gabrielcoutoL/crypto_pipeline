@@ -1,3 +1,26 @@
-# TODO: Crie um teste usando pytest.raises() para garantir que o Pydantic dê erro se tentarmos passar uma string ("abc") no campo 'last' que deveria ser convertido para float.
-# TODO: Crie uma lista mockada com 3 objetos CryptoTicker (coloque um deles com volume menor que 50).
-# TODO: Instancie o CryptoProcessor com os mocks, rode o process() e use assert para garantir que o DataFrame final Polars tem apenas 2 linhas (testando o filtro de volume).
+import pytest
+from pydantic import ValidationError
+
+from src.models import CryptoTicker
+from src.transform import CryptoProcessor
+
+
+def test_field_last():
+
+    with pytest.raises(ValidationError):
+        objeto_teste = CryptoTicker(ticker="TESTE", last="abc", high=1, low=1, vol=100)
+
+
+def test_volume_rule():
+
+    objetos_mockados = [
+        CryptoTicker(ticker="TESTE1", last=100, high=1, low=1, vol=100),
+        CryptoTicker(ticker="TESTE2", last=200, high=2, low=2, vol=100),
+        CryptoTicker(ticker="TESTE3", last=300, high=3, low=3, vol=30),
+    ]
+
+    processador = CryptoProcessor(objetos_mockados)
+
+    df_mock = processador.process()
+
+    assert len(df_mock) == 2
