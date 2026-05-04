@@ -2,5 +2,23 @@ services:
   crypto_polars:
     build: .
     container_name: etl_crypto
-    volumes: 
+    volumes:
       - ./data:/app/data
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+
+  postgres_db:
+    image: postgres:15-alpine
+    container_name: crypto_dw
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: mercado_bitcoin
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d mercado_bitcoin"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
